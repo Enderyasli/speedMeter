@@ -27,10 +27,8 @@ public class RunFragment extends Fragment implements SensorEventListener {
 
     private TextView mSpeed, mAverage,mSlope;
     private SensorManager sensorManager;
-    private Sensor sensor;
     Context context;
     Sensor accelerometer;
-    private SensorEvent sensorEvent;
 
     static Fragment newInstance() {
         return new RunFragment();
@@ -44,7 +42,7 @@ public class RunFragment extends Fragment implements SensorEventListener {
         View view = inflater.inflate(R.layout.fragment_run, container, false);
 
         mSpeed = view.findViewById(R.id.counter_speed);
-        mSlope = view.findViewById(R.id.tv_slope);
+        mSlope = view.findViewById(R.id.tv_slope_run);
         mAverage = view.findViewById(R.id.average);
         context = this.getContext();
 

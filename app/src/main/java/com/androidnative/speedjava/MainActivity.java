@@ -8,7 +8,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.IBinder;
-
 import androidx.fragment.app.Fragment;
 
 import com.androidnative.speedjava.business.CAverage;
@@ -18,18 +17,26 @@ public class MainActivity extends BaseActivity implements SensorEventListener, S
 
     private static final String RUN_FRAGMENT = "RUN_FRAGMENT";
     private static final String STOP_FRAGMENT = "STOP_FRAGMENT";
+    private static final int speedReq = 100;
     SensorEventListener sensorEventListener;
 
     private CAverage mCalculator;
 
     @Override
-    public int getLayout() { return R.layout.activity_main; }
+    public int getLayout() {
+        return R.layout.activity_main;
+
+    }
 
     @Override
-    public int getFragmentLayout() { return R.id.main_activity_fragmentlayout; }
+    public int getFragmentLayout() {
+        return R.id.main_activity_fragmentlayout;
+    }
 
     @Override
-    public Fragment getFragment() { return RunFragment.newInstance(); }
+    public Fragment getFragment() {
+        return RunFragment.newInstance();
+    }
 
     @Override
     public String getFragmentTag() {
@@ -44,7 +51,8 @@ public class MainActivity extends BaseActivity implements SensorEventListener, S
     @Override
     protected void onStart() {
         super.onStart();
-        bindService(new Intent(this, SlopeService.class),this, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(this, SlopeService.class), this, Context.BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -53,15 +61,20 @@ public class MainActivity extends BaseActivity implements SensorEventListener, S
         unbindService(this);
     }
 
+
+
+
     /**
-     *  RX JAVA
+     * RX JAVA
      */
 
     @Override
     public void subscriberAction(short speedResult) {
+
+
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(RUN_FRAGMENT);
 
-       // if (speedResult != 0) {
+        if (speedResult != 0) {
 
             if (fragment != null) {
                 mCalculator.setValue(speedResult);
@@ -69,15 +82,15 @@ public class MainActivity extends BaseActivity implements SensorEventListener, S
             } else {
                 getSupportFragmentManager().beginTransaction().replace(getFragmentLayout(), getFragment(), getFragmentTag()).commit();
             }
-            /*
+
         } else {
             // speedResult = 0
-            if (fragment != null){
+            if (fragment != null) {
                 getSupportFragmentManager().beginTransaction().replace(getFragmentLayout(), StopFragment.newInstance((short) mCalculator.getAverage()), STOP_FRAGMENT).commit();
             }
         }
 
-             */
+
     }
 
 
@@ -91,7 +104,7 @@ public class MainActivity extends BaseActivity implements SensorEventListener, S
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-        sensorEventListener.onAccuracyChanged(sensor,accuracy);
+        sensorEventListener.onAccuracyChanged(sensor, accuracy);
 
     }
 
